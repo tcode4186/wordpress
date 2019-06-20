@@ -12,7 +12,7 @@ var runSequence = require('run-sequence');
 gulp.task('browserSync', function() {
     connect.server({}, function (){
         browserSync({
-            proxy: 'localhost/wordpress-gulp'
+            proxy: 'localhost/expro/wooden'
         });
     });
 })
@@ -21,7 +21,7 @@ gulp.task('browserSync', function() {
 gulp.task('sass', function() {
     return gulp.src('../css/*.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(cssnano())
+        .pipe(cssnano({zindex: false}))
         .pipe(rename('style.min.css'))
         .pipe(gulp.dest('../css'))
 
@@ -33,9 +33,8 @@ gulp.task('sass', function() {
 
 gulp.task('watch', function() {
     gulp.watch('../css/*.scss', ['sass']);
-    gulp.watch('../*.php').on('change', browserSync.reload);
     gulp.watch('../js/**/*.js', browserSync.reload);
-    gulp.watch('../**/*.php').on('change', browserSync.reload());
+    gulp.watch('../**/*.php' , browserSync.reload);
 })
 
 
